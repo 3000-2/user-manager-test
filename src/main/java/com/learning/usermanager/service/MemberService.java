@@ -2,14 +2,17 @@ package com.learning.usermanager.service;
 
 import com.learning.usermanager.domain.Member;
 import com.learning.usermanager.repository.MemberRepository;
-import com.learning.usermanager.repository.MemoryMemberRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public class MemberService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     /**
      * 회원 가입
