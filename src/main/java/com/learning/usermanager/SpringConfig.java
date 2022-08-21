@@ -20,6 +20,13 @@ public class SpringConfig {
     //    private final DataSource dataSource;
     private final EntityManager em;
 
+//    private final MemberRepository memberRepository;
+//
+//    @Autowired
+//    public SpringConfig(MemberRepository memberRepository) {
+//        this.memberRepository = memberRepository;
+//    }
+
     @Autowired
     public SpringConfig(EntityManager em) {
         this.em = em;
@@ -34,4 +41,9 @@ public class SpringConfig {
     public MemberRepository memberRepository() {
         return new JpaMemberRepository(em);
     }
+
+//    @Bean
+//    public TimeTraceAop timeTraceAop() {
+//        return new TimeTraceAop();
+//    }
 }
