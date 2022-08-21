@@ -1,28 +1,21 @@
 package com.learning.usermanager.service;
 
 import com.learning.usermanager.domain.Member;
-import com.learning.usermanager.repository.MemoryMemberRepository;
-import org.junit.jupiter.api.AfterEach;
+import com.learning.usermanager.repository.MemberRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+@SpringBootTest
+@Transactional
+class MemberServiceIntegrationTest {
 
-class MemberServiceTest {
-
+    @Autowired
     MemberService memberService;
-    MemoryMemberRepository memberRepository;
-
-    @BeforeEach
-    void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach() {
-        memberRepository.clearStore();
-    }
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     void join() {
@@ -49,22 +42,8 @@ class MemberServiceTest {
         });
 
         Assertions.assertEquals("이미 존재하는 회원입니다.", e.getMessage());
-/*
-        service.join(member);
-        try {
-            service.join(member2);
-            fail("엑셉션을 던져야 합니다.");
-        } catch (IllegalStateException e) {
-            assertThat("이미 존재하는 회원입니다.").isEqualTo(e.getMessage());
-        }
-*/
+
     }
 
-    @Test
-    void findMembers() {
-    }
 
-    @Test
-    void findOne() {
-    }
 }

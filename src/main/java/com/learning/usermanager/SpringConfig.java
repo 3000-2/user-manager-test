@@ -1,10 +1,13 @@
 package com.learning.usermanager;
 
+import com.learning.usermanager.repository.JdbcTemplateMemberRepository;
 import com.learning.usermanager.repository.MemberRepository;
-import com.learning.usermanager.repository.MemoryMemberRepository;
 import com.learning.usermanager.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
 
 /**
  * component scan 방식이 아닌 직접 bean 등록하기
@@ -14,6 +17,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringConfig {
 
+    private final DataSource dataSource;
+
+    @Autowired
+    public SpringConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Bean
     public MemberService memberService() {
         return new MemberService(memberRepository());
@@ -21,6 +31,6 @@ public class SpringConfig {
 
     @Bean
     public MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
+        return new JdbcTemplateMemberRepository(dataSource);
     }
 }
